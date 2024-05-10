@@ -1,4 +1,3 @@
-//juego.cpp
 #include "juego.h"
 #include "jugador.h"
 #include <iostream>
@@ -9,6 +8,7 @@
 using namespace std;
 
 string Juego::palabraSeleccionada;
+string Juego::palabraobtenida;
 int Juego::puntuacionJugador;
 int Juego::puntuacionMaquina;
 
@@ -23,8 +23,7 @@ vector<Juego::PalabraDescripcion> Juego::palabras = {
         {"neptuno", "El planeta mas alejado del Sol, conocido por sus intensos vientos."},
         {"pluton", "Un planeta enano en el borde de nuestro sistema solar, anteriormente clasificado como el noveno planeta."},
         {"ceres", "El planeta enano más grande del cinturon de asteroides entre Marte y Jupiter."},
-        {"eris", "Un planeta enano en el cinturon de Kuiper, cuyo descubrimiento llevo a la redefinicion de lo que es un planeta."},
-
+        {"eris", "Un planeta enano en el cinturon de Kuiper, cuyo descubrimiento llevo a la redefinicion de lo que es un planeta."}
 };
 
 void Juego::iniciar() {
@@ -98,6 +97,10 @@ void Juego::iniciar() {
     }
 }
 
+string Juego::obtenerPalabra() {
+    return palabras[rand() % palabras.size()].palabra;
+}
+
 string Juego::obtenerDescripcionAleatoria() {
     palabraSeleccionada = palabras[rand() % palabras.size()].descripcion;
     return palabraSeleccionada;
@@ -128,7 +131,7 @@ void Juego::actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, 
                 puntuacionJugador += 5;
             }
         } else {
-            cout << " Incorrecto! La palabra era " <<  palabraobtenida<< endl;
+            cout << " Incorrecto! La palabra era " << palabraobtenida << endl;
             puntuacionJugador--; // Restar puntos por respuesta incorrecta
         }
     } else if (jugador == "Maquina") {
@@ -142,7 +145,6 @@ void Juego::actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, 
 
     mostrarPuntuacion();
 }
-
 
 void Juego::mostrarPuntuacion() {
     cout << "Puntuacion del Jugador 1: " << puntuacionJugador << endl;
@@ -170,3 +172,4 @@ string Juego::obtenerPista() {
 string Juego::obtenerEntradaMaquina() {
     return palabras[rand() % palabras.size()].palabra;
 }
+
