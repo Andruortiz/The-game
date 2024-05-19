@@ -20,6 +20,7 @@ public:
     static int puntuacionJugador;
     static int puntuacionMaquina;
 
+    void registrar(const std::string& nombre, int puntaje);
     void iniciar();
     string obtenerDescripcionAleatoria();
     string obtenerPalabra();

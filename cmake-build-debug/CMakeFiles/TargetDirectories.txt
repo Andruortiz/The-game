@@ -1,0 +1,3 @@
+C:/Users/andrs/CLionProjects/Thegame/cmake-build-debug/CMakeFiles/juego_deletreo.dir
+C:/Users/andrs/CLionProjects/Thegame/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/andrs/CLionProjects/Thegame/cmake-build-debug/CMakeFiles/rebuild_cache.dir

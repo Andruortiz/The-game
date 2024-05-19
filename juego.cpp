@@ -5,12 +5,26 @@
 #include <ctime>
 #include <algorithm>
 #include <chrono>
+#include <fstream>
+#include <vector>
 using namespace std;
 
 string Juego::palabraSeleccionada;
 string Juego::palabraobtenida;
 int Juego::puntuacionJugador;
 int Juego::puntuacionMaquina;
+
+void Juego::registrar(const string& nombre, int puntaje){
+    fstream file;
+    file.open("frases.txt",ios::out | ios::app);
+
+    if(!file.is_open()){
+    cout<<"el archivo no se abrio, error";
+    return;
+    }
+    file<<nombre<<" "<<puntaje<<endl;
+    file.close();
+}
 
 vector<Juego::PalabraDescripcion> Juego::palabras = {
         {"mercurio", "El planeta mas cercano al Sol."},
@@ -27,7 +41,7 @@ vector<Juego::PalabraDescripcion> Juego::palabras = {
 };
 
 void Juego::iniciar() {
-    cout << "Bienvenido al juego de adivina la palabras!" << endl;
+    cout << "Bienvenido al juego de adivina la palabra!" << endl;
     puntuacionJugador = 0;
     puntuacionMaquina = 0;
 
@@ -143,8 +157,12 @@ void Juego::actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, 
         }
     }
 
-    mostrarPuntuacion();
+    if (!respuestaCorrecta) {
+        mostrarPuntuacion();
+        perder();
+    }
 }
+
 
 void Juego::mostrarPuntuacion() {
     cout << "Puntuacion del Jugador 1: " << puntuacionJugador << endl;
