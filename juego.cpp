@@ -149,7 +149,7 @@ void Juego::mostrarMensaje(const string& mensaje) {
 void Juego::actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, int duracion) {
     if (jugador == "Jugador 1") {
         if (respuestaCorrecta) {
-            cout << " Correcto! Has adivinado la palabra correctamente." << endl;
+            cout << " Correcto! Has adivinado la palabra acertadamente." << endl;
             if (duracion <= 10) {
                 puntuacionJugador += 7;
             } else if (duracion <= 15) {
@@ -177,7 +177,7 @@ void Juego::actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, 
 }
 
 void Juego::mostrarPuntuacion() {
-    cout << "Puntuacion de"<<nombre_jugador<<": "<< puntuacionJugador << endl;
+    cout << "Puntuacion de "<<nombre_jugador<<": "<< puntuacionJugador << endl;
     cout << "Puntuacion de la Maquina: " << puntuacionMaquina << endl;
 }
 
