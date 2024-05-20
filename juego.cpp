@@ -7,41 +7,54 @@
 #include <chrono>
 #include <fstream>
 #include <vector>
+#include <sstream>
+
 using namespace std;
 
 string Juego::palabraSeleccionada;
 string Juego::palabraobtenida;
 int Juego::puntuacionJugador;
 int Juego::puntuacionMaquina;
+vector<Juego::PalabraDescripcion> Juego::palabras;
 
-void Juego::registrar(const string& nombre, int puntaje){
+void Juego::registrar(const string& nombre, int puntaje) {
     fstream file;
-    file.open("frases.txt",ios::out | ios::app);
+    file.open("frases.txt", ios::out | ios::app);
 
-    if(!file.is_open()){
-    cout<<"el archivo no se abrio, error";
-    return;
+    if (!file.is_open()) {
+        cout << "El archivo no se abrio, error" << endl;
+        return;
     }
-    file<<nombre<<" "<<puntaje<<endl;
+    file << nombre << " " << puntaje << endl;
     file.close();
 }
 
-vector<Juego::PalabraDescripcion> Juego::palabras = {
-        {"mercurio", "El planeta mas cercano al Sol."},
-        {"venus", "El segundo planeta del sistema solar."},
-        {"tierra", "Nuestro hogar, el unico planeta conocido habitado por vida."},
-        {"marte", "Conocido como el planeta rojo, tiene una atmosfera delgada y polvorienta."},
-        {"jupiter", "El planeta mas grande del sistema solar, conocido por su Gran Mancha Roja."},
-        {"saturno", "Con sus impresionantes anillos, es uno de los planetas más reconocibles."},
-        {"urano", "Un planeta gigante de hielo y gas."},
-        {"neptuno", "El planeta mas alejado del Sol, conocido por sus intensos vientos."},
-        {"pluton", "Un planeta enano en el borde de nuestro sistema solar, anteriormente clasificado como el noveno planeta."},
-        {"ceres", "El planeta enano más grande del cinturon de asteroides entre Marte y Jupiter."},
-        {"eris", "Un planeta enano en el cinturon de Kuiper, cuyo descubrimiento llevo a la redefinicion de lo que es un planeta."}
-};
+void Juego::cargarPalabrasDesdeArchivo(const string& nombreArchivo) {
+    ifstream archivo(nombreArchivo);
+    if (!archivo.is_open()) {
+        cout << "Error al abrir los datos de las palabras" << endl;
+        cout << "Ruta del archivo: " << nombreArchivo << endl; // Imprimir la ruta del archivo
+        return;
+    }
+    string linea;
+    while (getline(archivo, linea)) {
+        stringstream ss(linea);
+        string palabra, descripcion;
+
+        if (getline(ss, palabra, '|') && getline(ss, descripcion)) {
+            palabras.push_back({palabra, descripcion});
+        }
+    }
+    archivo.close();
+}
 
 void Juego::iniciar() {
     cout << "Bienvenido al juego de adivina la palabra!" << endl;
+    cout<<"ingresa tu nombre: "<<endl;
+    cin>>nombre_jugador;
+    // Cargar palabras desde el archivo
+    cargarPalabrasDesdeArchivo("palabras.txt");
+
     puntuacionJugador = 0;
     puntuacionMaquina = 0;
 
@@ -56,7 +69,7 @@ void Juego::iniciar() {
         auto inicio = chrono::steady_clock::now(); // Inicio del contador de tiempo
 
         while (true) {
-            Jugador jugador("Jugador 1");
+            Jugador jugador(nombre_jugador);
             string entrada;
             while (true) {
                 entrada = jugador.obtenerEntrada();
@@ -99,7 +112,7 @@ void Juego::iniciar() {
             if (respuestaCorrecta) {
                 cout << "Correcto! Has deletreado la palabra correctamente." << endl;
             } else {
-                cout << "Incorrecto! La palabra era " << palabraSeleccionada << endl;
+                cout << "Incorrecto! La palabra era " << palabraobtenida << endl;
             }
 
             mostrarPuntuacion();
@@ -163,7 +176,6 @@ void Juego::actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, 
     }
 }
 
-
 void Juego::mostrarPuntuacion() {
     cout << "Puntuacion del Jugador 1: " << puntuacionJugador << endl;
     cout << "Puntuacion de la Maquina: " << puntuacionMaquina << endl;
@@ -173,8 +185,8 @@ void Juego::perder() {
     if (puntuacionJugador <= 0) {
         cout << "Perdiste, tu puntuacion es cero o negativa." << endl;
         cout << "Empezando de nuevo..." << endl;
-        puntuacionJugador = 5;
-        puntuacionMaquina = 0;
+        puntuacionJugador = 1;
+        puntuacionMaquina = 1;
     }
 }
 

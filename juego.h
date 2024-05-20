@@ -20,6 +20,7 @@ public:
     static int puntuacionJugador;
     static int puntuacionMaquina;
 
+    void cargarPalabrasDesdeArchivo(const string& nombreArchivo);
     void registrar(const std::string& nombre, int puntaje);
     void iniciar();
     string obtenerDescripcionAleatoria();
@@ -31,6 +32,10 @@ public:
     void perder();
     string obtenerPista();
     string obtenerEntradaMaquina();
+
+
+private:
+    string nombre_jugador;
 };
 
 #endif // JUEGO_H

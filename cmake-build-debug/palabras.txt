@@ -1,0 +1,11 @@
+mercurio|El planeta mas cercano al Sol.
+venus|El segundo planeta del sistema solar.
+tierra|Nuestro hogar, el unico planeta conocido habitado por vida.
+marte|Conocido como el planeta rojo, tiene una atmosfera delgada y polvorienta.
+jupiter|El planeta mas grande del sistema solar, conocido por su Gran Mancha Roja.
+saturno|Con sus impresionantes anillos, es uno de los planetas mas reconocibles.
+urano|Un planeta gigante de hielo y gas.
+neptuno|El planeta mas alejado del Sol, conocido por sus intensos vientos.
+pluton|Un planeta enano en el borde de nuestro sistema solar, anteriormente clasificado como el noveno planeta.
+ceres|El planeta enano mas grande del cinturon de asteroides entre Marte y Jupiter.
+eris|Un planeta enano en el cinturon de Kuiper, cuyo descubrimiento llevo a la redefinicion de lo que es un planeta.
