@@ -7,9 +7,9 @@ using namespace std;
 
 class Jugador {
 public:
+    //revisar
     Jugador(const string& nombre);
     string obtenerEntrada();
-    string obtenerNombre();
 private:
     string nombre;
 };

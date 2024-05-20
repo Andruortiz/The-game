@@ -11,7 +11,3 @@ string Jugador::obtenerEntrada() {
     cin >> entrada;
     return entrada;
 }
-
-string Jugador::obtenerNombre() {
-    return nombre;
-    }

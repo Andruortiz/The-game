@@ -25,7 +25,7 @@ void Juego::registrar(const string& nombre, int puntaje) {
         cout << "El archivo no se abrio, error" << endl;
         return;
     }
-    file << nombre << " " << puntaje << endl;
+    file << nombre_jugador << " " << puntaje << endl;
     file.close();
 }
 
@@ -169,7 +169,7 @@ void Juego::actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, 
             cout << " Incorrecto! La palabra era " << palabraSeleccionada << endl;
         }
     }
-
+//jsjsjssd
     if (!respuestaCorrecta) {
         mostrarPuntuacion();
         perder();
@@ -177,7 +177,7 @@ void Juego::actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, 
 }
 
 void Juego::mostrarPuntuacion() {
-    cout << "Puntuacion del Jugador 1: " << puntuacionJugador << endl;
+    cout << "Puntuacion de"<<nombre_jugador<<": "<< puntuacionJugador << endl;
     cout << "Puntuacion de la Maquina: " << puntuacionMaquina << endl;
 }
 
