@@ -8,6 +8,7 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <map>
 
 using namespace std;
 
@@ -19,13 +20,41 @@ vector<Juego::PalabraDescripcion> Juego::palabras;
 
 void Juego::registrar(const string& nombre, int puntaje) {
     fstream file;
-    file.open("frases.txt", ios::out | ios::app);
+    map<string, int> jugadores;
+    string nombre_jugador;
+    int puntaje_jugador;
 
+    // Abrir el archivo para leer
+    file.open("frases.txt", ios::in);
     if (!file.is_open()) {
-        cout << "El archivo no se abrio, error" << endl;
+        cout << "El archivo no se pudo abrir para lectura, error" << endl;
         return;
     }
-    file << nombre_jugador << " " << puntaje << endl;
+
+    // Leer los nombres y puntajes en el mapa
+    while (file >> nombre_jugador >> puntaje_jugador) {
+        jugadores[nombre_jugador] = puntaje_jugador;
+    }
+    file.close();
+
+    // Actualizar la puntuación del jugador específico
+    if (jugadores.find(nombre) != jugadores.end()) {
+        jugadores[nombre] += puntaje;
+    } else {
+        jugadores[nombre] = puntaje;
+    }
+
+    // Abrir el archivo para escribir
+    file.open("frases.txt", ios::out | ios::trunc);
+    if (!file.is_open()) {
+        cout << "El archivo no se pudo abrir para escritura, error" << endl;
+        return;
+    }
+
+    // Escribir los datos actualizados en el archivo
+    for (const auto& jugador : jugadores) {
+        file << jugador.first << " " << jugador.second << endl;
+    }
     file.close();
 }
 
@@ -50,7 +79,7 @@ void Juego::cargarPalabrasDesdeArchivo(const string& nombreArchivo) {
 
 void Juego::iniciar() {
     cout << "Bienvenido al juego de adivina la palabra!" << endl;
-    cout<<"ingresa tu nombre: "<<endl;
+    cout<<"Ingresa tu nombre: "<<endl;
     cin>>nombre_jugador;
     // Cargar palabras desde el archivo
     cargarPalabrasDesdeArchivo("palabras.txt");
@@ -149,7 +178,7 @@ void Juego::mostrarMensaje(const string& mensaje) {
 void Juego::actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, int duracion) {
     if (jugador == "Jugador 1") {
         if (respuestaCorrecta) {
-            cout << " Correcto! Has adivinado la palabra acertadamente." << endl;
+            cout << "Correcto! Has adivinado la palabra correctamente." << endl;
             if (duracion <= 10) {
                 puntuacionJugador += 7;
             } else if (duracion <= 15) {
@@ -158,18 +187,19 @@ void Juego::actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, 
                 puntuacionJugador += 5;
             }
         } else {
-            cout << " Incorrecto! La palabra era " << palabraobtenida << endl;
+            cout << "Incorrecto! La palabra era " << palabraobtenida << endl;
             puntuacionJugador--; // Restar puntos por respuesta incorrecta
         }
+        registrar(nombre_jugador, puntuacionJugador); // Registrar la puntuación actualizada del jugador
     } else if (jugador == "Maquina") {
         if (respuestaCorrecta) {
-            cout << " Correcto! La maquina ha adivinado la palabra correctamente." << endl;
+            cout << "Correcto! La maquina ha adivinado la palabra correctamente." << endl;
             puntuacionMaquina += 5;
         } else {
-            cout << " Incorrecto! La palabra era " << palabraSeleccionada << endl;
+            cout << "Incorrecto! La palabra era " << palabraSeleccionada << endl;
         }
     }
-//jsjsjssd
+
     if (!respuestaCorrecta) {
         mostrarPuntuacion();
         perder();
