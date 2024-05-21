@@ -21,12 +21,10 @@ public:
     static int puntuacionMaquina;
 
     void cargarPalabrasDesdeArchivo(const string& nombreArchivo);
-    void registrar(const std::string& nombre, int puntaje);
     void iniciar();
     string obtenerDescripcionAleatoria();
     string obtenerPalabra();
     bool verificarPalabra(const string& palabra);
-    void mostrarMensaje(const string& mensaje);
     void actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, int duracion);
     void mostrarPuntuacion();
     void perder();

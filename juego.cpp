@@ -18,45 +18,6 @@ int Juego::puntuacionJugador;
 int Juego::puntuacionMaquina;
 vector<Juego::PalabraDescripcion> Juego::palabras;
 
-void Juego::registrar(const string& nombre, int puntaje) {
-    fstream file;
-    map<string, int> jugadores;
-    string nombre_jugador;
-    int puntaje_jugador;
-
-    // Abrir el archivo para leer
-    file.open("frases.txt", ios::in);
-    if (!file.is_open()) {
-        cout << "El archivo no se pudo abrir para lectura, error" << endl;
-        return;
-    }
-
-    // Leer los nombres y puntajes en el mapa
-    while (file >> nombre_jugador >> puntaje_jugador) {
-        jugadores[nombre_jugador] = puntaje_jugador;
-    }
-    file.close();
-
-    // Actualizar la puntuación del jugador específico
-    if (jugadores.find(nombre) != jugadores.end()) {
-        jugadores[nombre] += puntaje;
-    } else {
-        jugadores[nombre] = puntaje;
-    }
-
-    // Abrir el archivo para escribir
-    file.open("frases.txt", ios::out | ios::trunc);
-    if (!file.is_open()) {
-        cout << "El archivo no se pudo abrir para escritura, error" << endl;
-        return;
-    }
-
-    // Escribir los datos actualizados en el archivo
-    for (const auto& jugador : jugadores) {
-        file << jugador.first << " " << jugador.second << endl;
-    }
-    file.close();
-}
 
 void Juego::cargarPalabrasDesdeArchivo(const string& nombreArchivo) {
     ifstream archivo(nombreArchivo);
@@ -171,10 +132,6 @@ bool Juego::verificarPalabra(const string& palabra) {
     return false;
 }
 
-void Juego::mostrarMensaje(const string& mensaje) {
-    cout << mensaje << endl;
-}
-
 void Juego::actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, int duracion) {
     if (jugador == "Jugador 1") {
         if (respuestaCorrecta) {
@@ -190,7 +147,6 @@ void Juego::actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, 
             cout << "Incorrecto! La palabra era " << palabraobtenida << endl;
             puntuacionJugador--; // Restar puntos por respuesta incorrecta
         }
-        registrar(nombre_jugador, puntuacionJugador); // Registrar la puntuación actualizada del jugador
     } else if (jugador == "Maquina") {
         if (respuestaCorrecta) {
             cout << "Correcto! La maquina ha adivinado la palabra correctamente." << endl;
@@ -232,4 +188,3 @@ string Juego::obtenerPista() {
 string Juego::obtenerEntradaMaquina() {
     return palabras[rand() % palabras.size()].palabra;
 }
-//jihiug;
