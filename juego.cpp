@@ -232,3 +232,4 @@ string Juego::obtenerPista() {
 string Juego::obtenerEntradaMaquina() {
     return palabras[rand() % palabras.size()].palabra;
 }
+//jihiug;
