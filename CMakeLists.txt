@@ -17,3 +17,4 @@ set(SOURCES
 # Agregar el ejecutable
 add_executable(juego_deletreo ${SOURCES})
 add_executable(dificultades dificultades.cpp)
+add_executable(juego juego.cpp)
