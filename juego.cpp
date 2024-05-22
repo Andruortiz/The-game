@@ -18,6 +18,24 @@ int Juego::puntuacionJugador;
 int Juego::puntuacionMaquina;
 vector<Juego::PalabraDescripcion> Juego::palabras;
 
+// Agregado: Función para crear el resumen de partidas
+void Juego::crearResumen(const vector<pair<string, int>>& players) {
+    ofstream resumen("registro.txt");
+    if (!resumen) {
+        cout << "Error al crear el archivo de resumen." << endl;
+        return;
+    }
+
+    cout << "Escribiendo datos en el archivo registro.txt:" << endl; // Mensaje de depuración
+    for (const auto& player : players) {
+        cout << player.first << " - Puntuacion: " << player.second << endl; // Mensaje de depuración
+        resumen << player.first << " - Puntuacion: " << player.second << endl;
+    }
+
+    resumen.close();
+    cout << "Resumen creado correctamente." << endl; // Mensaje de depuración
+}
+
 
 void Juego::cargarPalabrasDesdeArchivo(const string& nombreArchivo) {
     ifstream archivo(nombreArchivo);
@@ -71,6 +89,13 @@ void Juego::iniciar() {
 
             if (entrada == "salir") {
                 cout << "Gracias por jugar!" << endl;
+                // Agregado: Crear el resumen de partidas antes de salir
+                vector<pair<string, int>> jugadores = {{nombre_jugador, puntuacionJugador}};
+                cout << "Llamando a crearResumen con los siguientes datos:" << endl;
+                for (const auto& jugador : jugadores) {
+                    cout << jugador.first << " - Puntuación: " << jugador.second << endl;
+                }
+                crearResumen(jugadores); // Llamar a la función para crear el resumen
                 return;
             }
 

@@ -19,6 +19,8 @@ public:
     static string palabraobtenida;
     static int puntuacionJugador;
     static int puntuacionMaquina;
+    static void crearResumen(const vector<pair<string, int>>& players);
+
 
     void cargarPalabrasDesdeArchivo(const string& nombreArchivo);
     void iniciar();
