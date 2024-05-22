@@ -16,45 +16,45 @@ int Juego::puntuacionJugador;
 int Juego::puntuacionMaquina;
 vector<Juego::PalabraDescripcion> Juego::palabras;
 
-// Funciones MergeSort para ordenar los jugadores por puntuación de mayor a menor...
-void merge(vector<pair<string, int>>& vec, int left, int mid, int right){
-    int n1=mid-left + 1;
-    int n2=right-mid;
+// Funciones MergeSort para ordenar los jugadores por puntuación de mayor a menor
+void merge(vector<pair<string, int>>& vec, int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
 
     vector<pair<string, int>> L(n1);
     vector<pair<string, int>> R(n2);
 
-    for (int i=0; i < n1; ++i)
-        L[i]=vec[left + i];
-    for (int i=0; i < n2; ++i)
-        R[i] =vec[mid + 1 + i];
+    for (int i = 0; i < n1; ++i)
+        L[i] = vec[left + i];
+    for (int i = 0; i < n2; ++i)
+        R[i] = vec[mid + 1 + i];
 
     int i = 0, j = 0, k = left;
     while (i < n1 && j < n2) {
-        if (L[i].second >= R[j].second){
-            vec[k]=L[i];
+        if (L[i].second >= R[j].second) {
+            vec[k] = L[i];
             i++;
         } else {
-            vec[k]=R[j];
+            vec[k] = R[j];
             j++;
         }
         k++;
     }
 
-    while (i<n1){
-        vec[k]=L[i];
+    while (i < n1) {
+        vec[k] = L[i];
         i++;
         k++;
     }
-//
-    while (j<n2){
-        vec[k]=R[j];
+
+    while (j < n2) {
+        vec[k] = R[j];
         j++;
         k++;
     }
 }
-//
-void mergeSort(vector<pair<string, int>>& vec, int left, int right){
+
+void mergeSort(vector<pair<string, int>>& vec, int left, int right) {
     if (left < right) {
         int mid = left + (right - left) / 2;
 
@@ -64,8 +64,8 @@ void mergeSort(vector<pair<string, int>>& vec, int left, int right){
         merge(vec, left, mid, right);
     }
 }
-//
-void Juego::crearResumen(const vector<pair<string, int>>& players){
+
+void Juego::crearResumen(const vector<pair<string, int>>& players) {
     vector<pair<string, int>> sortedPlayers = players;
 
     // Ordenar los jugadores usando MergeSort
@@ -87,7 +87,7 @@ void Juego::crearResumen(const vector<pair<string, int>>& players){
     cout << "Resumen creado correctamente." << endl; // Mensaje de depuración
 }
 
-void Juego::cargarPalabrasDesdeArchivo(const string& nombreArchivo){
+void Juego::cargarPalabrasDesdeArchivo(const string& nombreArchivo) {
     ifstream archivo(nombreArchivo);
     if (!archivo.is_open()) {
         cout << "Error al abrir los datos de las palabras" << endl;
@@ -95,17 +95,17 @@ void Juego::cargarPalabrasDesdeArchivo(const string& nombreArchivo){
         return;
     }
     string linea;
-    while (getline(archivo, linea)){
+    while (getline(archivo, linea)) {
         stringstream ss(linea);
         string palabra, descripcion;
 
-        if (getline(ss, palabra, '|') && getline(ss, descripcion)){
+        if (getline(ss, palabra, '|') && getline(ss, descripcion)) {
             palabras.push_back({palabra, descripcion});
         }
     }
     archivo.close();
 }
-//
+
 void Juego::iniciar() {
     cout << "Bienvenido al juego de adivina la palabra!" << endl;
     cout << "Ingresa tu nombre: " << endl;
