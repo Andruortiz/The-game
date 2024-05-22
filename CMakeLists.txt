@@ -11,7 +11,9 @@ set(SOURCES
         main.cpp
         juego.cpp
         jugador.cpp
+        cmake-build-debug/dificultades.cpp
 )
 
 # Agregar el ejecutable
 add_executable(juego_deletreo ${SOURCES})
+add_executable(dificultades dificultades.cpp)

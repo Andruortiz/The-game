@@ -1,3 +1,4 @@
-C:/Users/andrs/CLionProjects/Thegame/cmake-build-debug/CMakeFiles/juego_deletreo.dir
-C:/Users/andrs/CLionProjects/Thegame/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/andrs/CLionProjects/Thegame/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/julianamontoya/Documents/GitHub/The-game/cmake-build-debug/CMakeFiles/juego_deletreo.dir
+/Users/julianamontoya/Documents/GitHub/The-game/cmake-build-debug/CMakeFiles/dificultades.dir
+/Users/julianamontoya/Documents/GitHub/The-game/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/julianamontoya/Documents/GitHub/The-game/cmake-build-debug/CMakeFiles/rebuild_cache.dir

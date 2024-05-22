@@ -3,12 +3,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <algorithm>
-#include <chrono>
 #include <fstream>
 #include <vector>
 #include <sstream>
-#include <map>
+#include <chrono>
 
 using namespace std;
 
@@ -18,8 +16,61 @@ int Juego::puntuacionJugador;
 int Juego::puntuacionMaquina;
 vector<Juego::PalabraDescripcion> Juego::palabras;
 
-// Agregado: Función para crear el resumen de partidas
+// Funciones MergeSort para ordenar los jugadores por puntuación de mayor a menor
+void merge(vector<pair<string, int>>& vec, int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    vector<pair<string, int>> L(n1);
+    vector<pair<string, int>> R(n2);
+
+    for (int i = 0; i < n1; ++i)
+        L[i] = vec[left + i];
+    for (int i = 0; i < n2; ++i)
+        R[i] = vec[mid + 1 + i];
+
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (L[i].second >= R[j].second) {
+            vec[k] = L[i];
+            i++;
+        } else {
+            vec[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        vec[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        vec[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(vector<pair<string, int>>& vec, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+
+        mergeSort(vec, left, mid);
+        mergeSort(vec, mid + 1, right);
+
+        merge(vec, left, mid, right);
+    }
+}
+
 void Juego::crearResumen(const vector<pair<string, int>>& players) {
+    vector<pair<string, int>> sortedPlayers = players;
+
+    // Ordenar los jugadores usando MergeSort
+    mergeSort(sortedPlayers, 0, sortedPlayers.size() - 1);
+
     ofstream resumen("registro.txt");
     if (!resumen) {
         cout << "Error al crear el archivo de resumen." << endl;
@@ -27,7 +78,7 @@ void Juego::crearResumen(const vector<pair<string, int>>& players) {
     }
 
     cout << "Escribiendo datos en el archivo registro.txt:" << endl; // Mensaje de depuración
-    for (const auto& player : players) {
+    for (const auto& player : sortedPlayers) {
         cout << player.first << " - Puntuacion: " << player.second << endl; // Mensaje de depuración
         resumen << player.first << " - Puntuacion: " << player.second << endl;
     }
@@ -35,7 +86,6 @@ void Juego::crearResumen(const vector<pair<string, int>>& players) {
     resumen.close();
     cout << "Resumen creado correctamente." << endl; // Mensaje de depuración
 }
-
 
 void Juego::cargarPalabrasDesdeArchivo(const string& nombreArchivo) {
     ifstream archivo(nombreArchivo);
@@ -58,8 +108,8 @@ void Juego::cargarPalabrasDesdeArchivo(const string& nombreArchivo) {
 
 void Juego::iniciar() {
     cout << "Bienvenido al juego de adivina la palabra!" << endl;
-    cout<<"Ingresa tu nombre: "<<endl;
-    cin>>nombre_jugador;
+    cout << "Ingresa tu nombre: " << endl;
+    cin >> nombre_jugador;
     // Cargar palabras desde el archivo
     cargarPalabrasDesdeArchivo("palabras.txt");
 
@@ -78,18 +128,14 @@ void Juego::iniciar() {
 
         while (true) {
             Jugador jugador(nombre_jugador);
-            string entrada;
-            while (true) {
-                entrada = jugador.obtenerEntrada();
-                if (entrada != "") break;
-            }
+            string entrada = jugador.obtenerEntrada();
 
             auto fin = chrono::steady_clock::now(); // Fin del contador de tiempo
             auto duracion = chrono::duration_cast<chrono::seconds>(fin - inicio).count(); // Duración en segundos
 
             if (entrada == "salir") {
                 cout << "Gracias por jugar!" << endl;
-                // Agregado: Crear el resumen de partidas antes de salir
+                // Crear el resumen de partidas antes de salir
                 vector<pair<string, int>> jugadores = {{nombre_jugador, puntuacionJugador}};
                 cout << "Llamando a crearResumen con los siguientes datos:" << endl;
                 for (const auto& jugador : jugadores) {
@@ -188,7 +234,7 @@ void Juego::actualizarPuntuacion(const string& jugador, bool respuestaCorrecta, 
 }
 
 void Juego::mostrarPuntuacion() {
-    cout << "Puntuacion de "<<nombre_jugador<<": "<< puntuacionJugador << endl;
+    cout << "Puntuacion de " << nombre_jugador << ": " << puntuacionJugador << endl;
     cout << "Puntuacion de la Maquina: " << puntuacionMaquina << endl;
 }
 
